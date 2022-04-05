@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constants.dart';
-import 'package:flutter_project/dummy_data.dart';
+import 'package:flutter_project/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class DescriptionSection extends StatelessWidget {
   const DescriptionSection({
@@ -9,7 +10,7 @@ class DescriptionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = allProducts.first;
+    final product = Provider.of<ProductProvider>(context).getProduct();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

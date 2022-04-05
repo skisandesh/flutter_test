@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constants.dart';
 import 'package:flutter_project/dummy_data.dart';
+import 'package:flutter_project/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -15,7 +17,7 @@ class _AddOnSectionState extends State<AddOnSection> {
   String? _seleted = '';
   @override
   Widget build(BuildContext context) {
-    final addOns = allProducts.first.addOns;
+    final addOns = Provider.of<ProductProvider>(context).getProduct().addOns;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

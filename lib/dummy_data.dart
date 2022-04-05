@@ -9,11 +9,11 @@ List<Product> allProducts = [
     id: '1',
     description:'our Fried Momo is Made from the finest ingredients and veggies. Single Dish is Made with Fresh Vegen',
     name: 'Eybisi Salad Mix',
-    image: 'assets/images/salad.png',
-    price: 12.99,
-    quantity: 1,
+    image: 'assets/images/salad.jpg',
+    price: 2000,
     rating: 4.5,
     duration: 30,
+    calories: 410,
     isVegan: true,
     addOns: [
       AddOn(

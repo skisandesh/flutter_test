@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constants.dart';
+import 'package:flutter_project/models/product.dart';
+import 'package:flutter_project/providers/cart_provider.dart';
+import 'package:flutter_project/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartBtnSection extends StatefulWidget {
   const CartBtnSection({Key? key}) : super(key: key);
@@ -9,8 +13,23 @@ class CartBtnSection extends StatefulWidget {
 }
 
 class _CartBtnSectionState extends State<CartBtnSection> {
+  int quantity = 1;
+  void addQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+  void subtractQuantity() {
+    setState(() {
+      if (quantity > 1) {
+        quantity--;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
+  final product = Provider.of<ProductProvider>(context).getProduct();
+  final cart = Provider.of<CartProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
@@ -22,7 +41,7 @@ class _CartBtnSectionState extends State<CartBtnSection> {
         children: [
           TextButton(
             onPressed: () {},
-            child: Text('Rs. 20000', style: whiteText,),
+            child: Text('Rs. ${product.price}', style: whiteText,),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -37,25 +56,25 @@ class _CartBtnSectionState extends State<CartBtnSection> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                 IconButton(
-                  icon: Icon(Icons.remove,color: white,),
-                  onPressed: () {},
+                  icon: const Icon(Icons.remove,color: white,),
+                  onPressed: subtractQuantity,
                 ),
-                Text('1',style: whiteText,),
+                Text('$quantity',style: whiteText,),
                 IconButton(
-                  icon: Icon(Icons.add,color: white,),
-                  onPressed: () {},
+                  icon: const Icon(Icons.add,color: white,),
+                  onPressed: addQuantity,
                 ),
               ]),
             ),
           ),
           OutlinedButton(
-            onPressed: () {},
+            onPressed: (() => cart.addItem(product.id, product.price, product.name, product.id, quantity)),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.white),
               shape: MaterialStateProperty.all<CircleBorder>(
-                  CircleBorder(side: BorderSide(color: Colors.green))),
+                  const CircleBorder(side: BorderSide(color: Colors.green))),
             ),
-            child: Icon(Icons.shopping_basket,color: black,),
+            child: const Icon(Icons.shopping_basket,color: black,),
           ),
         ],
       ),

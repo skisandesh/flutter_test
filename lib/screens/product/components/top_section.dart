@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constants.dart';
 import 'package:flutter_project/dummy_data.dart';
+import 'package:flutter_project/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class TopSection extends StatelessWidget {
   const TopSection({
@@ -11,7 +13,7 @@ class TopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     var safePadding = MediaQuery.of(context).padding.top;
     final size = MediaQuery.of(context).size;
-    final product = allProducts.first;
+    final product = Provider.of<ProductProvider>(context).getProduct();
     return Stack(
       children: [
         Image.asset(

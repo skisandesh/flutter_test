@@ -3,6 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_project/constants.dart';
 import 'package:flutter_project/dummy_data.dart';
 import 'package:flutter_project/models/nutrition.dart';
+import 'package:flutter_project/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -16,10 +18,9 @@ class NutritionInfoSection extends StatefulWidget {
 class _NutritionInfoSectionState extends State<NutritionInfoSection> {
   @override
   Widget build(BuildContext context) {
-    final nutritionValue = allProducts.first.nutrition;
+    final product =  Provider.of<ProductProvider>(context).getProduct();
+
     final size = MediaQuery.of(context).size;
-    final total = nutritionValue.fold<double>(
-        0, (previousValue, element) => previousValue + element.value);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,16 +37,16 @@ class _NutritionInfoSectionState extends State<NutritionInfoSection> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Text('$total cal'),
+                  Text('${product.calories} cal'),
                   SizedBox(
                       width: 100,
                       height: 150,
-                      child: _pieChart(nutritionValue)),
+                      child: _pieChart(product.nutrition)),
                 ],
               ),
             ),
             SizedBox(width: size.width * 0.25),
-            Expanded(child: nutritionList(nutritionValue)),
+            Expanded(child: nutritionList(product.nutrition)),
           ],
         ),
       ],
