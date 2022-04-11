@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/constants.dart';
+import 'package:flutter_project/models/addon.dart';
 import 'package:flutter_project/models/product.dart';
 import 'package:flutter_project/providers/cart_provider.dart';
 import 'package:flutter_project/providers/product_provider.dart';
@@ -19,6 +20,7 @@ class _CartBtnSectionState extends State<CartBtnSection> {
       quantity++;
     });
   }
+
   void subtractQuantity() {
     setState(() {
       if (quantity > 1) {
@@ -26,10 +28,12 @@ class _CartBtnSectionState extends State<CartBtnSection> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
-  final product = Provider.of<ProductProvider>(context).getProduct();
-  final cart = Provider.of<CartProvider>(context);
+    final product = Provider.of<ProductProvider>(context).getProduct();
+    final cart = Provider.of<CartProvider>(context);
+    double price = Provider.of<ProductProvider>(context).price;
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
@@ -41,40 +45,54 @@ class _CartBtnSectionState extends State<CartBtnSection> {
         children: [
           TextButton(
             onPressed: () {},
-            child: Text('Rs. ${product.price}', style: whiteText,),
+            child: Text(
+              'Rs. ${price * quantity}',
+              style: whiteText,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               margin: const EdgeInsets.all(0),
-              padding: const EdgeInsets.symmetric(horizontal:15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-             border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(60),
-  ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(60),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(
-                  icon: const Icon(Icons.remove,color: white,),
+                  icon: const Icon(
+                    Icons.remove,
+                    color: white,
+                  ),
                   onPressed: subtractQuantity,
                 ),
-                Text('$quantity',style: whiteText,),
+                Text(
+                  '$quantity',
+                  style: whiteText,
+                ),
                 IconButton(
-                  icon: const Icon(Icons.add,color: white,),
+                  icon: const Icon(
+                    Icons.add,
+                    color: white,
+                  ),
                   onPressed: addQuantity,
                 ),
               ]),
             ),
           ),
           OutlinedButton(
-            onPressed: (() => cart.addItem(product.id, product.price, product.name, product.id, quantity)),
+            onPressed: (() => cart.addItem(
+                product.id, price*quantity, product.name, product.id, quantity)),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.white),
               shape: MaterialStateProperty.all<CircleBorder>(
                   const CircleBorder(side: BorderSide(color: Colors.green))),
             ),
-            child: const Icon(Icons.shopping_basket,color: black,),
+            child: const Icon(
+              Icons.shopping_basket,
+              color: black,
+            ),
           ),
         ],
       ),

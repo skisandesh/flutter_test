@@ -6,6 +6,9 @@ import 'package:flutter_project/models/product.dart';
 
 class ProductProvider extends ChangeNotifier{
   Product _product = allProducts[0];
+  double _price = allProducts[0].price;
+  double get price => _price;
+
 
   getProduct() => _product;
 
@@ -13,4 +16,11 @@ class ProductProvider extends ChangeNotifier{
     _product = product;
     notifyListeners();
   }
+
+  void addPrice(double price) {
+    _price = allProducts[0].price ;
+    _price += price;
+    notifyListeners();
+  }
+  
 }

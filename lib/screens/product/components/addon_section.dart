@@ -18,6 +18,8 @@ class _AddOnSectionState extends State<AddOnSection> {
   @override
   Widget build(BuildContext context) {
     final addOns = Provider.of<ProductProvider>(context).getProduct().addOns;
+    double productPrice = Provider.of<ProductProvider>(context).getProduct().price;
+    var product = context.read<ProductProvider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,11 +42,12 @@ class _AddOnSectionState extends State<AddOnSection> {
                         onChanged: (value) {
                           setState(() {
                             _seleted = value;
-                          
+                            product.addPrice(addOns[index].price);
                           });
                         })
                   ],
                 ),
+
               );
             }),
       ],
